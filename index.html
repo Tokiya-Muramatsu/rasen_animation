@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幅広バネのアニメーション</title>
+    <style>
+        canvas {
+            background-color: #f0f0f0;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="springCanvas" width="800" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('springCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const width = canvas.width;
+        const height = canvas.height;
+        const centerX = width / 4;
+        const centerY = height / 2;
+        const radiusX = 40; // 幅を広げる
+        const radiusY = 100;
+        const points = [];
+        const maxTrailLength = 450;
+        let angle = 0;
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+
+            const x = centerX + radiusX * Math.cos(angle);
+            const y = centerY + radiusY * Math.sin(angle);
+            points.push({ x: x, y: y });
+
+            if (points.length > maxTrailLength) {
+                points.shift();
+            }
+
+            ctx.beginPath();
+            for (let i = 0; i < points.length; i++) {
+                const trailX = points[i].x + i * 0.5;
+                ctx.lineTo(trailX, points[i].y);
+            }
+            ctx.strokeStyle = "rgba(0, 150, 255, 0.8)";
+            ctx.lineWidth = 4; // 線の幅を少し太く
+            ctx.stroke();
+
+            angle += 0.05;
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>
