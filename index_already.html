@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>幅広バネのアニメーション（最初からスタート）</title>
+    <title>幅広バネのアニメーション（すでに存在している版）</title>
     <style>
         canvas {
             background-color: #00523e;
@@ -38,6 +38,14 @@
         // バネの長さを決めます
         const maxTrailLength = 850; // 幅の長さ
         let angle = 9.5; // バネの角度を管理する数
+
+        // バネが既に描かれている状態を作るために、最初にいくつかのポイントを追加します
+        for (let i = 0; i < maxTrailLength; i++) {
+            const x = centerX + radiusX * Math.cos(angle);
+            const y = centerY + radiusY * Math.sin(angle);
+            points.push({ x: x, y: y });
+            angle += 0.05; // 各ポイントごとに角度を進めます
+        }
 
         // バネの関数
         function draw() {
